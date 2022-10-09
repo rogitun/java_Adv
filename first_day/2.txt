@@ -1,0 +1,4 @@
+functional interface
+
+T타입이 R타입으로 변환 => functional 
+T 타입이 T타입 => Identity function
