@@ -1,4 +1,4 @@
-package java00;
+package a_java00;
 
 import java.util.function.Function;
 

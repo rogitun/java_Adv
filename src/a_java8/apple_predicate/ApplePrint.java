@@ -1,7 +1,7 @@
-package java8.apple_predicate;
+package a_java8.apple_predicate;
 
-import java8.Apple;
-import java8.ApplePredicate;
+import a_java8.Apple;
+import a_java8.ApplePredicate;
 
 public class ApplePrint implements ApplePredicate {
     @Override

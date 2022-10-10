@@ -1,10 +1,8 @@
-package java00;
+package a_java00;
 
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Predicate;
 
 public class FunctionalPractical {

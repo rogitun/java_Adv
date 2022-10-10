@@ -1,7 +1,6 @@
-package java00;
+package a_java00;
 
 import java.util.concurrent.TimeUnit;
-import java.util.function.Supplier;
 
 public class SupplierPrac {
     public static void main(String[] args) {
