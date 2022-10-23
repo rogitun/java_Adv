@@ -1,4 +1,4 @@
-package lambda.predicate;
+package Chap_3_Lambda.predicate;
 
 @FunctionalInterface
 public interface StringPredicate<T> {

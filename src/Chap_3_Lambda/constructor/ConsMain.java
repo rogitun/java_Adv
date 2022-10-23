@@ -1,4 +1,4 @@
-package lambda.constructor;
+package Chap_3_Lambda.constructor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,8 +51,8 @@ public class ConsMain {
         return apples;
     }
 
-    public static <T, R, Apple> List<lambda.constructor.Apple> toAppleBiFunction(List<NotRipedApple> weired, BiFunction<Integer, String, lambda.constructor.Apple> function) {
-        List<lambda.constructor.Apple> apples = new ArrayList<>();
+    public static <T, R, Apple> List<Chap_3_Lambda.constructor.Apple> toAppleBiFunction(List<NotRipedApple> weired, BiFunction<Integer, String, Chap_3_Lambda.constructor.Apple> function) {
+        List<Chap_3_Lambda.constructor.Apple> apples = new ArrayList<>();
 
         for (NotRipedApple t : weired) {
             apples.add(function.apply(t.weight, t.color));

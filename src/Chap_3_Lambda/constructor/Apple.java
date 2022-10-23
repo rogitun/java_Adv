@@ -1,4 +1,4 @@
-package lambda.constructor;
+package Chap_3_Lambda.constructor;
 
 public class Apple {
 

@@ -1,4 +1,4 @@
-package lambda.consumer;
+package Chap_3_Lambda.consumer;
 
 import java.util.ArrayList;
 import java.util.List;

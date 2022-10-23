@@ -1,4 +1,4 @@
-package lambda.sort;
+package Chap_3_Lambda.sort;
 
 import java.util.ArrayList;
 import java.util.List;
