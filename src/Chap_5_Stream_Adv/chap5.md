@@ -101,3 +101,59 @@ limit은 sql 쿼리와 비슷하다.
 skip은 처음 n개의 요소를 제외한 함수이다.
 어떤 조건을 수행하는 요소들 중 n개를 건너뛴 결과를 반환할 수 있다.
 
+<h2>매핑</h2>
+
+특정 객체에서 특정 데이터를 선택하는 작업은 자주 수행되는 연산이다.
+스트림의 Map & FlatMap 메서드는 특정 데이터를 선택하는 기능을 제공한다.
+
+map에서는 적용한 결과가 새로운 요소로 매핑된다.
+
+```aidl
+        List<String> collect = dishes.stream()
+                .map(Dish::getName)
+                .collect(Collectors.toList());
+
+```
+<hr>
+
+> 스트림 평면화
+
+```
+    strings = ["abc","de"]
+    
+        List<String[]> splitsStrings = strings
+                .stream()
+                .map(s -> s.split(""))
+                .distinct()
+                .collect(Collectors.toList());
+                
+   result => [['a','b','c'],['d','e']]
+```
+
+위 코드를 사용하면 하나의 문자열은 하나의 알파벳으로 변환되어 반환된다.
+하지만 결과 타입은 List<String[]>이 된다.
+
+split으로 쪼개지니 String[] 타입이 반환될 수 밖에 없고\
+그걸 toList 헀으니 어찌 보면 당연하다. 
+
+이 문제는 flatMap을 사용해 해결할 수 있다.
+
+> FlatMap 
+
+```aidl
+        List<String> collect1 = strings.stream()
+                .map(w -> w.split("")) -> 각 단어를 개별 문자를 포함하는 배열로 변환
+                .flatMap(Arrays::stream) -> 생성된 스트림을 하나의 스트림으로 평면화
+                .distinct()
+                .collect(Collectors.toList());
+```
+
+중복이 제거된 완벽한 개별 string으로 반환된다.
+
+flatMap은 Array, Object 등의 모든 원소를 단일 원소 스트림으로 반환한다.
+
+map은 입력한 원소를 그대로 스트림으로 반환했지만, flatMap은 입력한 원소를 가장 작은 단위의 단일 스트림으로
+반환했다.
+조금 쉽게 말하면 여러 개의 스트림을 한개의 스트림으로 합쳐준다고 할 수 있다.
+
+
