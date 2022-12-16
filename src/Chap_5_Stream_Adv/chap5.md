@@ -216,6 +216,22 @@ reduce 연산의 파라미터는 초기값과 람다식이 옵니다.\
 
 따라서 첫번째 파라미터에는 이전의 max 혹은 min을 지속적으로 넣어줌으로써 최대값과 최소값을 구할 수 있습니다.
 
+> 숫자형 스트림
+
+지금까지는 reduce로 숫자 스트림의 합을 구했었다. reduce로 합을 구하는 방식은 내부적으로 Integer를 기본형으로 언박싱한다.\
+스트림API에서는 방식 비용을 피할 수 있도록 Int, Double, Long 등에 특화된 stream을 제공한다.
+
+```aidl
+      List<Dish> dishes = SampleDishes.getDishes();
+
+        //칼로리를 구해보자.
+
+        int sum = dishes.stream()
+                .mapToInt(d -> d.getCalory())
+                .sum();
+        //이외에도 max, min이 메서드로 존재한다.
+```
+
 
 
 
