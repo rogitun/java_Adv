@@ -6,6 +6,7 @@ import java.util.List;
 public class SampleDishes {
 
     private static List<Dish> dishes = new ArrayList<>();
+    private static List<Dish> noneVegeDishes = new ArrayList<>();
 
     public static List<Dish> getDishes(){
         if(dishes.size() == 0){
@@ -20,6 +21,16 @@ public class SampleDishes {
             dishes.add(new Dish("beef",false,700, Dish.Type.MEAT));
         }
         return dishes;
+    }
+
+    public static List<Dish> getNoneVegeDishes(){
+        if(noneVegeDishes.size() == 0){
+            noneVegeDishes.add(new Dish("season",true,120, Dish.Type.OTHER));
+            noneVegeDishes.add(new Dish("salmon",true,190, Dish.Type.FISH));
+            noneVegeDishes.add(new Dish("pizza",true,220, Dish.Type.OTHER));
+            noneVegeDishes.add(new Dish("Pork",true,230, Dish.Type.MEAT));
+        }
+        return noneVegeDishes;
     }
 
 }

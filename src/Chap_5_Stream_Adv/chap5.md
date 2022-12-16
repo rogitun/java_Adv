@@ -157,3 +157,65 @@ map은 입력한 원소를 그대로 스트림으로 반환했지만, flatMap은
 조금 쉽게 말하면 여러 개의 스트림을 한개의 스트림으로 합쳐준다고 할 수 있다.
 
 
+> predicate Matching
+
+프레디케이트 매칭에는 다양한 API가 존재한다. allMatch anyMatch, noneMatch, findFirst, findAny 등 다양한 유틸리티\
+메서드가 존재한다.
+
+![](../../../../../../var/folders/9s/f15_lrkj6gz69n360wp5np0r0000gn/T/TemporaryItems/NSIRD_screencaptureui_IpuR0t/스크린샷 2022-12-16 오후 4.42.44.png)
+
+1. 적어도 한 요소가 일치하는지 확인. anyMatch 
+2. 모든 요소가 일치하는지. allMatch
+3. NONEMATCH?\
+=> noneMatch는 allMatch와 반대되는 연산을 수행한다. 주어진 프레디케이트와 일치하는 요소가 없는지 확인하는 것이 NoneMatch이다.
+
+anyMatch, allMatch, noneMatch는 쇼트서킷 기법을 수행한다.\
+&& 연산인 and의 경우 전자가 false이면 해당 결과는 false로 굳이 후자의 프레디케이트를 확인할 필요가 없다.\
+이처럼 predicate matching api 또한 쇼트서킷 기법을 사용한다.
+
+
+
+> Find
+
+find API에는 findFirst와 findAny가 있다.\
+하지만 특정 상황에 따라서는 두개가 차이가 없을 수 있다.
+
+findFirst와 findAny가 별도로 존재하는 이유는 병렬성 때문이다.\
+병렬 실행에서는 첫번째 요소를 찾기 어렵다. 따라서 요소의 반환 순서가 상관없다면 병렬 스트림에서는 제약이 적은
+findAny를 사용한다.
+
+> Reduce
+
+리듀스는 모든 스트림 요소를 처리해서 값으로 도출하는 연산이다.\
+특정 스트림에서 모든 값을 곱한 값을 구하거나, 더한 값을 구하는 경우 reducing 연산을 통해 결과 값을 도출해낼 수 있다.\
+
+```aidl
+  List<Integer> integers = Arrays.asList(1, 2, 3, 4, 5);
+
+        Integer result = integers.stream()
+                .reduce(0, (a, b) -> a + b);
+
+        Integer result2Multi = integers.stream().reduce(1, (a, b) -> a * b);
+
+        System.out.println(result);
+        System.out.println(result2Multi);
+```
+
+reduce 연산으로 최대값과 최소값 또한 구할 수 있습니다.
+
+```aidl
+
+        Integer max = integers.stream().reduce(0, (a, b) -> (a > b ? a : b));
+        Integer min = integers.stream().reduce(Integer.MAX_VALUE, (a, b) -> (a > b ? b : a));
+        System.out.println(max);
+        System.out.println(min);
+```
+
+reduce 연산의 파라미터는 초기값과 람다식이 옵니다.\
+누적되는 값은 람다식 파라미터의 첫번째가 되고, stream의 요소는 두번째 파라미터가 됩니다.
+
+따라서 첫번째 파라미터에는 이전의 max 혹은 min을 지속적으로 넣어줌으로써 최대값과 최소값을 구할 수 있습니다.
+
+
+
+
