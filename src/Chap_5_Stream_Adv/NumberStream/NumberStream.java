@@ -17,5 +17,10 @@ public class NumberStream {
         //이외에도 max, min, average 등의 메서드가 존재한다.
 
         System.out.println(sum);
+
+
+        dishes.
+                stream()
+                .toList();
     }
 }
