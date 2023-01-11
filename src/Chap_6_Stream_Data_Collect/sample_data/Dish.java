@@ -14,6 +14,12 @@ public class Dish {
         this.type = type;
     }
 
+    public String groupByCalory() {
+        if (this.calory > 500) return "heavy";
+        else return "light";
+    }
+
+
     public String getName() {
         return name;
     }
@@ -51,6 +57,6 @@ public class Dish {
         return name;
     }
 
-    public enum Type {MEAT,OTHER,FISH}
+    public enum Type {MEAT, OTHER, FISH}
 
 }
