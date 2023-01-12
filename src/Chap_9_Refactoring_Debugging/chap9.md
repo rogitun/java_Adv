@@ -159,3 +159,95 @@
 
 2. 템플릿메서드
 
+템플릿 메서드 패턴은 변하지 않는 기능은 슈퍼클래스에, 자주 변경되며 확장할 기능은 서브 클래스에 만들어 다른 형태의 메서드 사용을 유연하게 하는 패턴을 말한다.
+
+```aidl
+    public abstract class OnlineBanking {
+        public void processCustomer(int id){
+            Customer c = Database.getCustomerWithId(id);
+            makeCustomerHappy(c);
+        }
+
+        abstract void makeCustomerHappy(Customer c);
+    }
+```
+
+위와 같은 템플릿 메서드 패턴이 존재할 때 makeCustomerHappy를 람다식으로 치환해 처리할 수 있다.
+makeCustomerHappy는 상속받은 하위 클래스에서 다른 형태로 처리해야하는데, 해당 메서드를 파라미터로 받아 람다식으로 전환하는 방법이 존재한다.
+
+```aidl
+   public void processCustomerWithLambda(int id, Consumer<Customer> makeCustomerHappy) {
+        Customer customerWithId = Database.getCustomerWithId(id);
+        makeCustomerHappy.accept(customerWithId);
+    }
+```
+
+```aidl
+# KHBanking은 OnlineBanking을 상속
+        new KHBanking().processCustomerWithLambda(1234, (Customer c) -> {
+            System.out.println("Make our customer Happy");
+        });
+```
+
+3. 옵저버 패턴
+
+어떤 이벤트가 발생했을 때 주체가 다른 객체 List에 자동으로 알림을 보내야 하는 상황에서 옵저버 패턴을 사용한다.\
+구독이나 댓글 알림 등의 서비스를 생각하면 된다.
+
+- Observer
+```aidl
+    public interface Observer {
+        void notify(String tweet);
+    }
+    
+    public class Cnn implements Observer {
+        @Override
+        public void notify(String tweet) {
+            if (!tweet.isEmpty() && tweet.contains("money")) {
+                System.out.println("Breaking News about Money ! " + tweet);
+            }
+        }
+}
+```
+
+- Subject
+```aidl
+    public interface Subject {
+        void registerObserver(Observer o);
+    
+        void notifyObserver(String tweet);
+    }
+    
+    public class Feed implements Subject {
+    
+        private final List<Observer> observerList = new ArrayList<>();
+    
+        @Override
+        public void registerObserver(Observer o) {
+            observerList.add(o);
+        }
+    
+        @Override
+        public void notifyObserver(String tweet) {
+            observerList.forEach(o -> o.notify(tweet));
+        }
+    }
+```
+
+```aidl
+     public static void main(String[] args) {
+            Feed feed = new Feed();
+            feed.registerObserver(new Cnn()); //구현된 클래스 사용
+    
+            feed.registerObserver((String tweet)->{
+                if(!tweet.isEmpty() && tweet.contains("money")){
+                    System.out.println("Breaking News about money" + tweet);
+                }
+            });
+    
+            feed.notifyObserver("I don't have money");
+        }
+```
+
+그렇다고 항상 람다식을 사용해야 하는 것은 아니다. 위 코드에선 동작이 간단하기 때문에 가능하지만,\
+옵저버가 상태를 가지거나, 펑셔널 인터페이스가 아닌 경우 위 처럼 처리하는 것은 바람직하지 않다.
